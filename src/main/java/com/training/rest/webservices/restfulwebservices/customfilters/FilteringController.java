@@ -13,14 +13,14 @@ import java.util.List;
 @RestController
 public class FilteringController
 {
-    // filter and hide field 2
+    // filter and hide field 2, filter for single object
     @GetMapping("/filtering")
      public MappingJacksonValue retrieveSomeBean(){
         SomeBean someBean = new SomeBean("value1", "value2", "value3");
         SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field1", "field3");
         return applyFilter(filter, someBean);
      }
-     // filter and hide field 1 and 3
+     // filter and hide field 1 and 3, filter for multiple or list of objects
      @GetMapping("/filtering-list")
     public MappingJacksonValue retrieveListOfBeans(){
          List<SomeBean> someBeans = Arrays.asList(new SomeBean("val1", "val2", "val3"),
@@ -28,7 +28,7 @@ public class FilteringController
          SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field2");
          return applyFilter(filter, someBeans);
      }
-
+    //filter structure, same is used above
      public MappingJacksonValue applyFilter(SimpleBeanPropertyFilter f, Object o){
          FilterProvider filters = new SimpleFilterProvider().addFilter("SomeBeanFilter", f);
          MappingJacksonValue mapping = new MappingJacksonValue(o);
